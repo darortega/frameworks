@@ -1,0 +1,49 @@
+{% extends "estructura.html" %}
+{% block contenido %} 
+    <ol class="breadcrumb">
+        <li class="active"> Nuevo Egresado
+        </li>
+    </ol>
+	<form action="{% url 'gestoregresados.views.nuevoegresado' %}" method="POST">
+	<!-- garantiza que el usuario que pidio el recurso se le envie a él y evita la inyeccion SQL-->
+
+		{% csrf_token %} 
+		<div class="form-group">
+            <label>Identificacion: </label> 
+            <input class="form-control" placeholder="Cedula Ciudadania" {{form.id_egresado}}  
+        </div>
+        <div class="form-group">
+            <label>Nombre Egresado: </label> 
+            <input class="form-control" placeholder="Nombre Egresado" {{form.nombre_egresado}}   
+        </div>
+        <div class="form-group">
+            <label>Apellido Egresado: </label> 
+            <input class="form-control" placeholder="Apellido Egresado" {{form.apellido_egresado}}  
+        </div>
+        <div class="form-group">
+            <label>Titulo Obtenido: </label> 
+            <input class="form-control" placeholder="Titulo Egresado" {{form.titulo_egresado}}   
+        </div>
+        <div class="form-group">
+            <label>Email Egresado: </label> 
+            <input class="form-control" placeholder="correo@ejemplo.com" {{form.email_egresado}}   
+        </div>
+        <div class="form-group">
+            <label>Fecha Egreso: </label> 
+            <input class="form-control" type="date" id="{{form.fecha_fin}}
+        </div>
+        <div class="form-group">
+            <label>Telefono: </label> 
+            <input class="form-control" placeholder="Contacto Egresado" {{form.tel_egresado}}   
+        </div>
+        <div class="form-group">
+            <label>Direccion: </label> 
+            <input class="form-control" placeholder="Direccion" {{form.dir_egresado}}   
+        </div>
+        <div class="form-group">
+            <label>Selects</label>
+            <select class="form-control" {{ form.estado_egresado }}</select>
+        </div>
+		<input class="btn btn-sm btn-primary" type="submit" value="Enviar">
+    </form>
+{% endblock %}	

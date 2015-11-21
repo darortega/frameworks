@@ -1,0 +1,13 @@
+{% extends "estructura.html" %}
+{% block contenido %} 
+	<ol class="breadcrumb">
+        <li class="active"> Crear Nueva Experiencia laboral...
+        </li>
+    </ol>
+	
+	<form action="{% url 'gestoregresados.views.ponexperiencia' egresado.pk %}" method="POST">
+		{% csrf_token %} 
+		{{ form.as_p }}
+		<input class="btn btn-sm btn-primary" type="submit" value="Enviar">
+	</form>
+{% endblock %}	

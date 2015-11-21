@@ -1,0 +1,87 @@
+{% extends "estructura.html" %}
+{% block contenido %}
+	<ol class="breadcrumb">
+        <li class="active"> Situacion del egresad@: {{ linea.nombre_egresado }} {{ linea.apellido_egresado }}
+        </li>
+    </ol>
+	<div class="panel panel-primary">
+       	<div class="panel-heading">
+           	<h3 class="panel-title">Informacion General </h3>
+       	</div>
+       	<div class="panel-body">                                
+			<p>Identificacion: {{ linea.id_egresado }} </p>
+			<p>Nombre egresado: {{ linea.nombre_egresado }} </p>
+			<p>Apellido egresado: {{ linea.apellido_egresado }} </p>		
+			<p>Titulo: {{ linea.titulo_egresado }}</p>
+			<p>Fecha:  {{ linea.fecha_fin}} </p>
+			<p>Email: {{ linea.email_egresado }} </p>		
+			<p>Telefono: {{ linea.tel_egresado }} </p>
+			<p>Direccion: {{ linea.dir_egresado }} </p>
+			<p>Estado actual: {{ linea.estado_egresado }} </p>
+   		</div>
+   		<div>
+   			<form action="{% url 'gestoregresados.views.update' linea.id %}" method="POST">{% csrf_token %} 
+				<input style="margin: 5px;" class="btn btn-sm btn-primary"type="submit" value="Modificar Datos">
+			</form>
+        </div>
+   	</div>
+	<div class="page-header">
+                    <h1>Adicional</h1>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="list-group">
+                            <a class="list-group-item">
+                            {% if mispostgrados %}{% endif %}
+                                <h4 class="list-group-item-heading">Postgrados: </h4>
+                                <p class="list-group-item-text">
+                                	{% for mispostgrados in mispostgrados %}
+											<li>{{ mispostgrados.titulo_postgrado }}
+											<br>{{ mispostgrados.ano_inicio }} 
+											<br>{{ mispostgrados.ano_fin }}</li>
+									{% endfor %}
+                                </p>
+                            </a>
+                            <a href="{% url 'gestoregresados.views.addpostgrados' linea.id %}" class="list-group-item active">
+                                <h4 class="list-group-item-heading">Agregar Postgrado</h4>
+                            </a>                            
+                        </div>
+                    </div>
+                    <!-- /.col-sm-4 -->
+                    <div class="col-sm-4">
+                        <div class="list-group">
+                            <a class="list-group-item">
+                            {% if misexperiencias %}{% endif %}
+                                <h4 class="list-group-item-heading">Experiencia: </h4>
+                                <p class="list-group-item-text">
+                                	{% for misexperiencias in misexperiencias %}
+										<li>{{ misexperiencias.empresa }}
+										<br>{{ misexperiencias.cargo }}</li>
+									{% endfor %}
+                                </p>
+                            </a>
+                            <a href="{% url 'gestoregresados.views.addexperiencias' linea.id %}" class="list-group-item active">
+                                <h4 class="list-group-item-heading">Agregar Experiencia</h4>
+                            </a> 
+                        </div>
+                    </div>
+                    <!-- /.col-sm-4 -->
+                    <div class="col-sm-4">
+                        <div class="list-group">
+                            <a class="list-group-item">
+                            {% if misredes %}{% endif %}
+                                <h4 class="list-group-item-heading">Redes: </h4>
+                                <p class="list-group-item-text">
+                                	{% for misredes in misredes %}
+										<li>{{ misredes.nombre_red }}
+										<br>{{ misredes.email_contacto }}</li>
+									{% endfor %}
+                                </p>
+                            </a> 
+                            <a href="{% url 'gestoregresados.views.addredes' linea.id %}" class="list-group-item active">
+                                <h4 class="list-group-item-heading">Agregar Red</h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}
