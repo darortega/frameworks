@@ -10,6 +10,12 @@ from django.forms import ModelForm
 from django.core.context_processors import csrf
 from gestoregresados.models import Egresado, Postgrado, Experiencia, Red
 
+#para el login esta importacion
+from django.views.generic import TemplateView
+
+class IndexView(TemplateView):
+ 		template_name = 'index.html'
+
 class FormularioEgresado(ModelForm):
 	class Meta:
 		model = Egresado
@@ -29,10 +35,10 @@ class FormularioRed(ModelForm):
     class Meta:
         model = Red
         exclude = ["id"]
-
+ 	
 def salir(request):
 	logout(request)
-	return HttpResponseRedirect(reverse("gestoregresados.views.main"))
+	return render_to_response("index.html")	
 
 #@login_required(login_url='/')
 def ponred(request, pk):	 
@@ -44,7 +50,7 @@ def ponred(request, pk):
 
 def addredes(request, pk):
 	identrada = Egresado.objects.get(pk=int(pk))
-	p=dict(egresado=identrada, form=FormularioRed())
+	p=dict(egresado=identrada, form=FormularioRed(),user=request.user)
 	p.update(csrf(request))
 	return render_to_response("redes.html", p)	
 
@@ -57,7 +63,7 @@ def ponexperiencia(request, pk):
 
 def addexperiencias(request, pk):
 	identrada = Egresado.objects.get(pk=int(pk))
-	p=dict(egresado=identrada, form=FormularioExperiencia())
+	p=dict(egresado=identrada, form=FormularioExperiencia() ,user=request.user)
 	p.update(csrf(request))
 	return render_to_response("experiencias.html", p)	
 
@@ -70,20 +76,20 @@ def ponpostgrado(request, pk):
 
 def addpostgrados(request, pk):
 	identrada = Egresado.objects.get(pk=int(pk))
-	p=dict(egresado=identrada, form=FormularioPostgrado())
+	p=dict(egresado=identrada, form=FormularioPostgrado() ,user=request.user)
 	p.update(csrf(request))
 	return render_to_response("postgrados.html", p)	
 
 def main(request):
 	entrada = Egresado.objects.all().order_by("fecha_fin")
-	return render_to_response("listado.html",dict(entrada=entrada))
+	return render_to_response("listado.html",dict(entrada=entrada,user=request.user))
 
 def entrada(request,pk):
 	identrada = Egresado.objects.get(pk=int(pk))
 	mispostgrados = Postgrado.objects.filter(identrad=identrada)
 	misexperiencias = Experiencia.objects.filter(identra=identrada)
 	misredes = Red.objects.filter(identr=identrada)
-	p=dict(linea=identrada, mispostgrados=mispostgrados, misexperiencias=misexperiencias, misredes=misredes)
+	p=dict(linea=identrada,user=request.user, mispostgrados=mispostgrados, misexperiencias=misexperiencias, misredes=misredes)
 	p.update(csrf(request))
 	return render_to_response("entrada.html",p)
 
@@ -106,7 +112,7 @@ def delete(request,pk):
 
 def update(request,pk):	
 	idegresado = Egresado.objects.get(pk=int(pk))	
-	p=dict(egresado=idegresado, form=FormularioEgresado(),user=request.user)
+	p=dict (egresado=idegresado, form=FormularioEgresado(),user=request.user)
 	p.update(csrf(request))
 	return render_to_response("updateegresado.html",p)
 
