@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-#'social.apps.django_app.default',
+#
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
+    'social.apps.django_app.default',
     'gestoregresados',
 )
 
@@ -104,17 +104,20 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 
-#AUTHENTICATION_BACKENDS = (
-#        'social.backends.facebook.FacebookAppOAuth2',
- #       'social.backends.facebook.FacebookOAuth2',
- #       'social.backends.twitter.TwitterOAuth',
- #       'django.contrib.auth.backends.ModelBackend',
- #   )
+AUTHENTICATION_BACKENDS = (
+        'social.backends.facebook.FacebookAppOAuth2',
+        'social.backends.facebook.FacebookOAuth2',
+        'social.backends.twitter.TwitterOAuth',
+        'django.contrib.auth.backends.ModelBackend',
+    )
 
-#SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 
-#SOCIAL_AUTH_FACEBOOK_KEY = '761811380591021'
-#SOCIAL_AUTH_FACEBOOK_SECRET = '683b0b14373a364589591c25df74af74'
+SOCIAL_AUTH_TWITTER_KEY = 'fNo4qNdzkJRnQUG9hDlniv5Av'
+SOCIAL_AUTH_TWITTER_SECRET = '3DIL75DqDSg3r7shSwupJYeR9uDAv35T7wNOtdDug8bT0hUNdM'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '761811380591021'
+SOCIAL_AUTH_FACEBOOK_SECRET = '683b0b14373a364589591c25df74af74'
 
 #STATIC_URL = '/static/'
 

@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,render_to_response
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -28,7 +30,12 @@ class FormularioRed(ModelForm):
         model = Red
         exclude = ["id"]
 
-def ponred(request, pk):
+def salir(request):
+	logout(request)
+	return HttpResponseRedirect(reverse("gestoregresados.views.main"))
+
+#@login_required(login_url='/')
+def ponred(request, pk):	 
     p = request.POST
     red = Red(identr=Egresado.objects.get(pk=pk))
     fr = FormularioRed(p, instance=red)
@@ -119,3 +126,4 @@ def modegresado(request,pk):
 	egremodificado.save()
 	
 	return HttpResponseRedirect(reverse("gestoregresados.views.main"))
+# git add . * git commit -u "coment" * git origin master ---- https://gist.github.com/bMinaise/7329874 
